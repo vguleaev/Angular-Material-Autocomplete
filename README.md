@@ -1,6 +1,8 @@
 # DynamicAutocomplete
 Dynamic Autocomplete component for Angular Material 
 
+![alt text](https://pp.userapi.com/c845417/v845417502/b1b35/QT0YqgKaKb4.jpg)
+
 # Install
 Run `npm install @vguleaev/dynamic-autocomplete`
 
