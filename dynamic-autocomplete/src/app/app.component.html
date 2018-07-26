@@ -1,0 +1,42 @@
+<mat-card>
+
+  <autocomplete
+    [hasSearchButton] = "true"
+    [source] = "dataService"
+    [minChars] = "0"
+    [displayItem]= "'item.view'"
+    [(model)]= "model"
+    [hasProgressBar] = "true"
+    [displayTemplate] = "itemTemplate"
+    [canCreateNew] = "true"
+    (createNew) = "createNew($event)"
+    [focusOn] = "false"
+  >
+  </autocomplete>
+
+  <button mat-raised-button (click)="showSelected()"> Submit </button>
+
+</mat-card>
+
+
+<mat-card *ngIf="model">
+
+  <mat-form-field >
+    <input matInput placeholder="Value" [(ngModel)]="model.value">
+  </mat-form-field>
+  <br/>
+  <mat-form-field >
+      <input matInput placeholder="View" [(ngModel)]="model.view">
+  </mat-form-field>
+
+</mat-card>
+
+
+<ng-template #itemTemplate let-item>   
+  <div style="flex: 1 1 auto;">
+   <mat-icon>alarm</mat-icon>
+    #{{item.value}} {{item.view}}
+  </div>
+</ng-template>
+
+

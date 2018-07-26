@@ -1,0 +1,55 @@
+<mat-form-field class="input-container">
+  <input matInput
+         *ngIf="formControlItem && formControlName"
+         [formControl]="formControlItem"
+         [required]="required"
+         [matAutocomplete]="autocomplete"
+         [placeholder]="placeholder"
+         (keyup)="onKey($event)"
+         (focus)="onFocus($event)"
+         (blur)="onBlur($event)"
+         #autocompleteInput
+  />
+  <input matInput
+         *ngIf="!formControlItem && !formControlName"
+         [name]="name"
+         [disabled]="disabled"
+         [required]="required"
+         [matAutocomplete]="autocomplete"
+         [placeholder]="placeholder"
+         (keyup)="onKey($event)"
+         (focus)="onFocus($event)"
+         (blur)="onBlur($event)"
+         [(ngModel)]="model"
+         #autocompleteInput
+  />
+  <button *ngIf="hasSearchButton" #searchButton mat-button matPrefix mat-icon-button aria-label="Search" (click)="fetch(true)" type="button">
+      <mat-icon class="search-icon">search</mat-icon>
+  </button>
+  <button *ngIf="model || value || query" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearValue()" #clearButton type="button">
+    <mat-icon class="clear-icon">clear</mat-icon>
+  </button>
+  <mat-progress-bar mode="indeterminate" *ngIf="hasProgressBar && requestsInQueue > 0"></mat-progress-bar>
+  <mat-autocomplete #autocomplete="matAutocomplete"
+                    [displayWith]="autocompleteDisplayFn()"
+                    (optionSelected)="autocompleteSelected($event)">
+    <mat-option *ngFor="let item of autocompleteList" [value]="item">
+      <ng-template [ngIf]="displayTemplate">
+        <ng-container *ngTemplateOutlet="displayTemplate; context: {$implicit: item}"></ng-container>
+      </ng-template>
+      <span *ngIf="!displayTemplate">
+        {{viewItem(item)}}
+      </span>
+    </mat-option>
+    <mat-option *ngIf="query && noSuggestions" disabled>
+      <span>Sorry, no suggestions were found</span>
+    </mat-option>
+    <mat-option *ngIf="query && noSuggestions && canCreateNew" [value]="query" (click)="onCreateNew()">
+      <mat-icon class="add-icon">add</mat-icon> <span class="create-new"> {{addNewText}} </span>
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error>
+    {{ validationErrors && validationErrors.length > 0 ? validationErrors[0] : ''}}
+  </mat-error>
+</mat-form-field>
+
