@@ -9,4 +9,4 @@ npm install @vguleaev/dynamic-autocomplete
 
 # Documentation
 
-Please read documentation on github (https://github.com/vguleaev/DynamicAutocomplete)
+Please read [documentation on github](https://github.com/vguleaev/DynamicAutocomplete)
