@@ -1,2 +1,2 @@
 # DynamicAutocomplete
-Dynamic Autocomeplte component for Angular Material 
+Dynamic Autocomplete component for Angular Material 

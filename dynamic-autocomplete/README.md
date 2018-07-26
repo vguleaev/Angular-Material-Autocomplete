@@ -5,4 +5,4 @@ Angular 4+ and Angular Material should be installed in your project.
 
 #Documentation
 
-Please read documentation on github (link here)
+Please read documentation on github (https://github.com/vguleaev/DynamicAutocomplete)
