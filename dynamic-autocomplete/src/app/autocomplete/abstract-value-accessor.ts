@@ -49,19 +49,3 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, Val
   }
   public registerOnValidatorChange?(fn: () => void): void;
 }
-
-export function MakeValueProvider(type: any) {
-  return {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => type),
-    multi: true,
-  };
-}
-
-export function MakeValidatorsProvider(type: any) {
-  return {
-    provide: NG_VALIDATORS,
-    useExisting: forwardRef(() => type),
-    multi: true,
-  };
-}

@@ -1,14 +1,19 @@
-import { AfterViewInit, Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output, TemplateRef } from "@angular/core";
-import { MakeValueProvider, AbstractValueAccessor } from "./abstract-value-accessor";
+import { AfterViewInit, Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output, TemplateRef, forwardRef } from "@angular/core";
+import { AbstractValueAccessor } from "./abstract-value-accessor";
 import { MatAutocomplete, MatButton } from "@angular/material";
 import { AutocompleteService } from "./autocomplete.service";
 import { HttpParams } from "@angular/common/http";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
   selector: "autocomplete",
   templateUrl: "./autocomplete.component.html",
   styleUrls: ["./autocomplete.component.scss"],
-  providers: [MakeValueProvider(AutocompleteComponent)],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => AutocompleteComponent),
+    multi: true,
+  }],
 })
 export class AutocompleteComponent extends AbstractValueAccessor implements AfterViewInit, OnInit {
   /**

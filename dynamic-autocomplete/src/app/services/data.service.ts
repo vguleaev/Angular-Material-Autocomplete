@@ -1,8 +1,8 @@
-import { AutocompleteService } from '../components/autocomplete/autocomplete.service';
 import { Observable } from 'rxjs';
 import { tap, catchError, delay, filter, map } from 'rxjs/operators';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
 @Injectable()
 export class DataService implements AutocompleteService<any> {

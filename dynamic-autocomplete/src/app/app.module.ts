@@ -8,11 +8,11 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { DynamicAutocompleteModule } from './autocomplete/autocomplete.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AutocompleteComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +27,8 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     MatAutocompleteModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    DynamicAutocompleteModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
