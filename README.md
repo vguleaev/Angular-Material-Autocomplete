@@ -35,12 +35,9 @@ Use component somewhere in html template `<autocomplete></autocomplete>`
      *
      *    (optionSelected)="onSelectCallback($event)" // get selected item from event
      *
-     *    formControlName="controlName"               // access it as any form control
-     *    [formControlItem]="form.controls['controlName']"
-     *    [(ngModel)]="model.item"
-     *
-     *    [(model)]="model.item"                      // or just use model binding
-     *    (modelChange)="itemSelected($event)"
+     *    [formControl]="form.controls['controlName']"    // access it as any form control
+     *    [(ngModel)]="model.item"                        // or just use model binding
+     *    (ngModelChange)="itemSelected($event)"
      *
      *  ></autocomplete>
      
