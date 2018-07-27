@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output, TemplateRef, forwardRef } from "@angular/core";
-import { AbstractValueAccessor } from "./abstract-value-accessor";
-import { MatAutocomplete, MatButton } from "@angular/material";
+import { MatAutocomplete } from "@angular/material";
 import { AutocompleteService } from "./autocomplete.service";
 import { HttpParams } from "@angular/common/http";
-import { NG_VALUE_ACCESSOR } from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from "@angular/forms";
 
 @Component({
   selector: "autocomplete",
@@ -12,10 +11,10 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => AutocompleteComponent),
-    multi: true,
-  }],
+    multi: true
+  }]
 })
-export class AutocompleteComponent extends AbstractValueAccessor implements AfterViewInit, OnInit {
+export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValueAccessor {
   /**
    *  How to use this component:
    *
@@ -30,7 +29,7 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
    *    [hasSearchButton] = "false"                 // adds search button near input
    *
    *    displayItem = "item.name"                   // text will be evaluated and executed, better use displayItemFn for function
-   *    [displayTemplate] = "TemplateRef"           // template reference for autocomplete options, displayItem is needed for local search
+   *    [displayTemplate] = "TemplateRef"           // template reference for autocomplete options, displayItem or displayTemplate
    *
    *    [canCreateNew] = "false"                    // adds create button when no suggestions
    *    [addNewText] = "'Add new'"                  // text to display near create button
@@ -41,12 +40,9 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
    *
    *    (optionSelected)="onSelectCallback($event)" // get selected item from event
    *
-   *    formControlName="controlName"               // access it as any form control
-   *    [formControlItem]="form.controls['controlName']"
-   *    [(ngModel)]="model.item"
-   *
-   *    [(model)]="model.item"                      // or just use model binding
-   *    (modelChange)="itemSelected($event)"
+   *    [formControl]="form.controls['controlName']"      // access it as any form control
+   *    [(ngModel)]="model.item"                          // or just use model binding
+   *    (ngModelChange)="itemSelected($event)"
    *
    *  ></autocomplete>
    */
@@ -61,10 +57,11 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
     }
   }
 
-  // @Input() placeholder = "";
   @Input() name = "";
+  @Input() placeholder = "";
+  @Input() formControl?: FormControl;
   @Input() doPrefetch = false;
-  @Input() displayItem: string;
+  @Input() displayItem?: string;
   @Input() hasSearchButton = false;
   @Input() hasProgressBar = false;
   @Input() minChars = 2;
@@ -83,11 +80,9 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
   @Output() createNew = new EventEmitter();
 
   @ViewChild("autocompleteInput") autocompleteInput: ElementRef;
-  @ViewChild("searchButton") searchButton: MatButton;
-  @ViewChild("clearButton") clearButton: MatButton;
   @ViewChild("autocomplete") autocomplete: MatAutocomplete;
 
-  public currentModel: any;
+  public selectedOption: any;
   public query = "";
   public autocompleteList: any[] | null;
   public request = false;
@@ -98,24 +93,10 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
   private service?: AutocompleteService<any>;
   private returnType: string;
 
-  @Input() set model(value: any) {
-    if (value !== this.currentModel) {
-      this.currentModel = value;
-      if (value === null || this.returnType === typeof value) {
-        this.modelChange.emit(value);
-      }
-    }
-  }
-  get model(): any {
-    return this.currentModel;
-  }
-
-  constructor() {
-    super();
-    this.placeholder = this.placeholder ? this.placeholder : "Search";
-  }
+  constructor() {}
 
   ngOnInit() {
+    this.placeholder = this.placeholder ? this.placeholder : "Search";
     if (this.doPrefetch) {
       this.prefetch();
     }
@@ -216,9 +197,7 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
   public autocompleteSelected($event: any) {
     this.query = this.autocompleteInput.nativeElement.value;
     const selected = $event.option.value;
-
-    this.value = selected;
-    this.model = selected;
+    this.writeValue(selected);
 
     if (selected) {
       this.optionSelected.emit(selected);
@@ -258,9 +237,9 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
   }
 
   public onBlur($event: MouseEvent) {
-    if (this.searchButton && this.autocompleteInput.nativeElement.value === ""
-      && $event.relatedTarget !== this.searchButton["_elementRef"].nativeElement) {
-      this.autocompleteInput.nativeElement.value = this.model ? this.viewItem(this.model) : "";
+    this.query = this.autocompleteInput.nativeElement.value;
+    if (this.selectedOption && this.viewItem(this.selectedOption) !== this.query) {
+      this.autocompleteInput.nativeElement.value = this.viewItem(this.selectedOption);
     }
   }
 
@@ -281,11 +260,13 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
   }
 
   public clearValue() {
-    if (this.formControlItem) {
-      this.formControlItem.reset();
+    if (this.formControl) {
+      this.formControl.reset();
     }
-    this.model = null;
-    this.value = "";
+    this.selectedOption = null;
+    this.autocompleteInput.nativeElement.value = "";
+    this.query = "";
+    this.onChange(this.selectedOption);
   }
 
   get doSearchViaService() {
@@ -295,12 +276,12 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
   }
 
   public onCreateNew() {
-    if (this.model) {
-      const value = this.returnType === typeof this.model ? this.viewItem(this.model) : this.model;
+    if (this.selectedOption) {
+      const value = this.returnType === typeof this.selectedOption ? this.viewItem(this.selectedOption) : this.selectedOption;
       this.autocompleteInput.nativeElement.value = value;
     }
 
-    this.createNew.emit(this.model);
+    this.createNew.emit(this.selectedOption);
   }
 
   private isQueryEmpty(query: string): boolean {
@@ -315,5 +296,28 @@ export class AutocompleteComponent extends AbstractValueAccessor implements Afte
     if (items && items.length > 0) {
       this.returnType = typeof items[0];
     }
+  }
+
+  writeValue(val: any): void {
+    if (!val) {
+      return;
+    }
+    this.selectedOption = val;
+
+    if (this.autocompleteInput) {
+      this.autocompleteInput.nativeElement.value = this.viewItem(this.selectedOption);
+    }
+
+    this.onChange(val);
+  }
+
+  onChange: any = () => {};
+  onTouched: any = () => {};
+
+  registerOnChange(fn: any): void { this.onChange = fn; }
+  registerOnTouched(fn: any): void { this.onTouched = fn; }
+
+  setDisabledState?(isDisabled: boolean): void {
+    throw new Error("Method not implemented.");
   }
 }
