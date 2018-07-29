@@ -1,0 +1,7 @@
+[
+    { "value": 0, "view": "zero" },
+    { "value": 1, "view": "one" },
+    { "value": 2, "view": "Two" },
+    { "value": 3, "view": "three" },
+    { "value": 4, "view": "four" }
+]
