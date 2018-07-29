@@ -12,11 +12,15 @@ export class AppComponent implements OnInit {
   @ViewChild("itemTemplate") linkTemplate: TemplateRef<any>;
 
   items = [
-    { value: '0', view: 'zero' },
-    { value: '1', view: 'one' },
-    { value: '2', view: 'two' },
-    { value: '3', view: 'three' },
-    { value: '4', view: 'four' }
+    { code: '0', name: 'Red' },
+    { code: '1', name: 'Blue' },
+    { code: '2', name: 'Green' },
+    { code: '3', name: 'Yellow' },
+    { code: '4', name: 'Black' },
+    { code: '5', name: 'Purple' },
+    { code: '6', name: 'White' },
+    { code: '7', name: 'Grey' },
+    { code: '8', name: 'Orange' },
   ];
 
   items2 = ['1', '2', '3', '4'];
@@ -33,7 +37,7 @@ export class AppComponent implements OnInit {
 
   public createNew(value: string) {
     const newName = prompt('Enter new name for an item', value);
-    this.items.push({value: '99', view: newName});
+    this.items.push({code: '99', name: newName});
     this.items = this.items.slice(0);
   }
 }

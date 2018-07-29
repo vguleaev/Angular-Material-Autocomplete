@@ -1,42 +1,43 @@
-<mat-card>
+<div class="container">
 
-  <autocomplete
-    [hasSearchButton] = "true"
-    [source] = "dataService"
-    [minChars] = "3"
-    [displayItem]= "'item.view'"
-    [(ngModel)]= "model"
-    [hasProgressBar] = "true"
-    [displayTemplate] = "itemTemplate"
-    [canCreateNew] = "true"
-    (createNew) = "createNew($event)"
-    [focusOn] = "false"
-  >
-  </autocomplete>
+  <h2>Select a country: </h2>
 
-  <button mat-raised-button (click)="showSelected()"> Submit </button>
+  <mat-card>
+    <autocomplete 
+      [hasSearchButton]="true" 
+      [source]="dataService" 
+      [minChars]="1" 
+      [displayItem]="'item.name'" 
+      [(ngModel)]="model"
+      [hasProgressBar]="true" 
+      [displayTemplate]="itemTemplate" 
+      [canCreateNew]="true" 
+      (createNew)="createNew($event)" 
+      [focusOn]="false"
+    >
+    </autocomplete>
 
-</mat-card>
+    <button mat-raised-button (click)="showSelected()"> Submit </button>
+  </mat-card>
 
-
-<mat-card *ngIf="model">
-
-  <mat-form-field >
-    <input matInput placeholder="Value" [(ngModel)]="model.value">
-  </mat-form-field>
   <br/>
-  <mat-form-field >
-      <input matInput placeholder="View" [(ngModel)]="model.view">
-  </mat-form-field>
 
-</mat-card>
-
-
-<ng-template #itemTemplate let-item>   
-  <div style="flex: 1 1 auto;">
-   <mat-icon>alarm</mat-icon>
-    #{{item.value}} {{item.view}}
-  </div>
-</ng-template>
+  <mat-card *ngIf="model">
+    <mat-form-field>
+      <input matInput placeholder="Value" [(ngModel)]="model.code">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput placeholder="View" [(ngModel)]="model.name">
+    </mat-form-field>
+  </mat-card>
 
 
+  <ng-template #itemTemplate let-item>
+    <div style="flex: 1 1 auto;">
+      <mat-icon>flag</mat-icon>
+      {{item.name}} | {{item.code}}
+    </div>
+  </ng-template>
+
+</div>
