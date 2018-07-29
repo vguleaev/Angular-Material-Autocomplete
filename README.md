@@ -43,4 +43,7 @@ Use component somewhere in html template `<autocomplete></autocomplete>`
      
  # Detailed documentation
  
- 
+ | First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
