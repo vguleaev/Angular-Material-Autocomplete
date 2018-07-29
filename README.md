@@ -11,6 +11,8 @@ Import module with `import { DynamicAutocompleteModule } from '../../node_module
 
 Use component somewhere in html template `<autocomplete></autocomplete>`
 
+Component can be used as any form control because of implementing ControlValueAccessor.
+
      *  How to use this component:
      *
      *  <autocomplete
