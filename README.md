@@ -1,5 +1,5 @@
 # DynamicAutocomplete
-Dynamic Autocomplete component for Angular Material 
+Dynamic Autocomplete component for Angular Material. See the [demo here](https://vguleaev.github.io/DynamicAutocomplete/)
 
 ![alt text](https://pp.userapi.com/c845417/v845417502/b1b35/QT0YqgKaKb4.jpg)
 
