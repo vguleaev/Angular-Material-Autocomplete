@@ -130,6 +130,14 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
     });
   }
 
+  public search() {
+    if (this.doSearchViaService) {
+      this.fetch(true);
+    } else {
+      this.filterStoredItems(true);
+    }
+  }
+
   public fetch(force?: boolean) {
     if (!this.service) {
       throw new Error("Service for fetch is not defined in 'Source'");
@@ -163,17 +171,21 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
     }
   }
 
-  public filterStoredItems() {
+  public filterStoredItems(force?: boolean) {
     if (!this.displayItem && !this.displayItemFn) {
       throw new Error("You must provide displayItem or displayItemFn for local search.");
     }
 
     this.query = this.autocompleteInput.nativeElement.value;
-    if (this.query.length < this.minChars) {
+
+    // empty query is not allowed for autocomplete
+    if (this.isQueryEmpty(this.query)) {
+      this.autocompleteList = [];
       return;
     }
 
-    if (this.storedItems) {
+    if (force || this.query.length >= this.minChars && this.storedItems) {
+      this.noSuggestions = false;
 
       this.autocompleteList = this.storedItems.filter(item => {
         if (!this.viewItem(item)) {
@@ -186,11 +198,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
         }
         return formatedItem.indexOf(this.query.toLowerCase()) > -1;
       });
-      this.noSuggestions = this.query.length > 0 && this.autocompleteList.length === 0;
-
-    } else {
-      this.autocompleteList = [];
-      this.noSuggestions = false;
+      this.noSuggestions = this.autocompleteList.length === 0;
     }
   }
 
@@ -238,7 +246,8 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
 
   public onBlur($event: MouseEvent) {
     this.query = this.autocompleteInput.nativeElement.value;
-    if (this.selectedOption && this.viewItem(this.selectedOption) !== this.query) {
+    if (this.selectedOption && this.returnType === typeof this.selectedOption
+       && this.viewItem(this.selectedOption) !== this.query) {
       this.autocompleteInput.nativeElement.value = this.viewItem(this.selectedOption);
     }
   }

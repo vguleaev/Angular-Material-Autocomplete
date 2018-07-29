@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { HttpClient } from '../../node_modules/@angular/common/http';
-import { Observable } from '../../node_modules/rxjs';
 import { DataService } from './services/data.service';
 
 @Component({
@@ -16,10 +14,12 @@ export class AppComponent implements OnInit {
   items = [
     { value: '0', view: 'zero' },
     { value: '1', view: 'one' },
-    { value: '2', view: 'Two' },
+    { value: '2', view: 'two' },
     { value: '3', view: 'three' },
     { value: '4', view: 'four' }
   ];
+
+  items2 = ['1', '2', '3', '4'];
 
   constructor(public dataService: DataService) {}
 

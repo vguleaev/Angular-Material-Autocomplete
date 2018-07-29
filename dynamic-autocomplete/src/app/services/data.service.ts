@@ -15,7 +15,10 @@ export class DataService implements AutocompleteService<any> {
 
         return this._http.get<any[]>(this._productUrl, {params: params}).pipe(
             map(result => {
-                return result.filter(x => x.view && x.view.toLowerCase().indexOf(query.toLowerCase()) > -1);
+                if (query) {
+                    return result.filter(x => x.view && x.view.toLowerCase().indexOf(query.toLowerCase()) > -1);
+                }
+                return result;
             }),
             delay(1000))
         .toPromise();
