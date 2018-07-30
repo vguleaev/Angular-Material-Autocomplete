@@ -1,14 +1,16 @@
-# DynamicAutocomplete
-Dynamic Autocomplete component for Angular Material. See the [demo here](https://vguleaev.github.io/DynamicAutocomplete/)
+# Angular Material Autocompelte
+This is wrapper for standard [mat-autocomplete](https://material.angular.io/components/autocomplete/overview) that extends traditional behavior with new functional such as form control binding, fetch from API service or data array, prefetch items on init, loading animation, templates render for suggestions in list. 
+
+See the [demo here](https://vguleaev.github.io/DynamicAutocomplete/)
 
 ![alt text](https://pp.userapi.com/c845417/v845417502/b1b35/QT0YqgKaKb4.jpg)
 
-# Install
+# Get started
+
 Run `npm install @vguleaev/dynamic-autocomplete`
 
 Angular Material must be installed. Run `npm install @angular/material @angular/cdk`
 
-# Get started
 Import module with `import { DynamicAutocompleteModule } from '../../node_modules/@vguleaev/dynamic-autocomplete';`
 
 Use component somewhere in html template `<autocomplete></autocomplete>`
@@ -27,15 +29,16 @@ Component can be used as any form control because of implementing ControlValueAc
      *    [hasProgressBar] = "false"                  // adds loading while making request
      *    [hasSearchButton] = "false"                 // adds search button near input
      *
-     *    displayItem = "item.name"                   // text will be evaluated and executed, better use displayItemFn for function
+     *    [displayItem] = "'item.name'"               // text will be evaluated and executed, better use displayItemFn for function
+     *    [displayItemFn] = "function"                // mutually exclusive with displayItem
      *    [displayTemplate] = "TemplateRef"           // template reference for autocomplete options, displayItem is needed for local search
      *
      *    [canCreateNew] = "false"                    // adds create button when no suggestions
      *    [addNewText] = "'Add new'"                  // text to display near create button
      *    (createNew) = "onCreateNew($event)"         // rises an event when click on create button
      *
-     *    [filterCallback] = "function"               // callback function to format data from server response
-     *    [focusOn]="true"                            // sets focus that triggers fetch
+     *    [transformResult] = "function"               // callback function to format data from server response
+     *    [isFocused]="true"                           // sets focus that triggers fetch
      *
      *    (optionSelected)="onSelectCallback($event)" // get selected item from event
      *
@@ -45,7 +48,7 @@ Component can be used as any form control because of implementing ControlValueAc
      *
      *  ></autocomplete>
      
- # Detailed documentation
+ # Documentation
  
 | Attribute        | Description |
 | -------------    | ------------- |
