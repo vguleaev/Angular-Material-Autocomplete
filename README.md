@@ -1,5 +1,5 @@
 # Angular Material Autocompelte
-This is wrapper for standard [mat-autocomplete](https://material.angular.io/components/autocomplete/overview) that extends traditional behavior with new functional such as form control binding, fetch from API service or data array, prefetch items on init, loading animation, templates render for suggestions. 
+This is wrapper for standard [mat-autocomplete](https://material.angular.io/components/autocomplete/overview) that simplify developpment with autocomplete inputs. It extends traditional behavior with new functional such as form control binding, fetch from API service or data array, prefetch items on init, loading animation, templates render for suggestions. 
 
 See the [demo here.](https://vguleaev.github.io/DynamicAutocomplete/)
 
