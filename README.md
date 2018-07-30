@@ -28,6 +28,7 @@ Component can be used as any form control because of implementing ControlValueAc
      *    [clearAfterSearch] = "false"                // clears input after item select
      *    [hasProgressBar] = "false"                  // adds loading while making request
      *    [hasSearchButton] = "false"                 // adds search button near input
+     *    [validationErrors]="errors"                 // string[] every sting in array displays as mat-error
      *
      *    [displayItem] = "'item.name'"               // text will be evaluated and executed, better use displayItemFn for function
      *    [displayItemFn] = "function"                // mutually exclusive with displayItem
