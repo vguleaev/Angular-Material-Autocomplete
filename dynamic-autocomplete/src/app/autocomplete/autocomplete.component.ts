@@ -146,7 +146,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
     this.query = this.autocompleteInput.nativeElement.value;
 
     // empty query is not allowed for autocomplete
-    if (this.isQueryEmpty(this.query)) {
+    if (this.isQueryEmpty(this.query) && this.minChars !== 0) {
       this.autocompleteList = [];
       return;
     }
@@ -179,7 +179,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
     this.query = this.autocompleteInput.nativeElement.value;
 
     // empty query is not allowed for autocomplete
-    if (this.isQueryEmpty(this.query)) {
+    if (this.isQueryEmpty(this.query) && this.minChars !== 0) {
       this.autocompleteList = [];
       return;
     }
