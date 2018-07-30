@@ -5,7 +5,7 @@ See the [demo here.](https://vguleaev.github.io/Angular-Material-Autocomplete/)
 
 ![alt text](https://pp.userapi.com/c845417/v845417502/b1b35/QT0YqgKaKb4.jpg)
 
-# Get started
+# Getting started
 
 Run `npm install @vguleaev/angular-material-autocomplete`
 
