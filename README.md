@@ -11,7 +11,7 @@ Run `npm install @vguleaev/angular-material-autocomplete`
 
 Angular Material must be installed. Run `npm install @angular/material @angular/cdk`
 
-Import module with `import { DynamicAutocompleteModule } from '../../node_modules/@vguleaev/dynamic-autocomplete';`
+Import module with `import { DynamicAutocompleteModule } from '../../node_modules/@vguleaev/angular-material-autocomplete';`
 
 Use component somewhere in html template `<autocomplete></autocomplete>`
 
