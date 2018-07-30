@@ -1,6 +1,6 @@
 {
-  "name": "@vguleaev/dynamic-autocomplete",
-  "version": "0.0.5",
+  "name": "@vguleaev/angular-material-autocomplete",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
