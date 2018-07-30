@@ -184,8 +184,12 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
       return;
     }
 
-    if (force || this.query.length >= this.minChars && this.storedItems) {
+    if (force || this.query.length >= this.minChars) {
       this.noSuggestions = false;
+
+      if (!this.storedItems) {
+        return;
+      }
 
       this.autocompleteList = this.storedItems.filter(item => {
         if (!this.viewItem(item)) {
