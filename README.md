@@ -35,7 +35,7 @@ Component can be used as any form control because of implementing ControlValueAc
      *
      *    [canCreateNew] = "false"                    // adds create button when no suggestions
      *    [addNewText] = "'Add new'"                  // text to display near create button
-     *    (createNew) = "onCreateNew($event)"         // rises an event when click on create button
+     *    (createNew) = "onCreateNew(inputValue)"     // rises an event when click on create button
      *
      *    [transformResult] = "function"               // callback function to format data from server response
      *    [isFocused]="true"                           // sets focus that triggers fetch
@@ -44,7 +44,7 @@ Component can be used as any form control because of implementing ControlValueAc
      *
      *    [formControl]="form.controls['controlName']"    // access it as any form control
      *    [(ngModel)]="model.item"                        // or just use model binding
-     *    (ngModelChange)="itemSelected($event)"
+     *    (ngModelChange)="itemSelected(item)"
      *
      *  ></autocomplete>
      
@@ -66,6 +66,6 @@ Component can be used as any form control because of implementing ControlValueAc
 | canCreateNew | false               | Boolean. When active, shows a create button when no suggestions are found. | 
 | addNewText   | "Add new"           | String. Text to display near create button. | 
 | createNew    |                     | Output event. Clicking on create new button rises this event and pass current input value as event param. | 
-| filterCallback | x: any[] => x     | Function. Is used to format data returned from the server. Used only when source is a service. |
+| transformResult | x: any[] => x     | Function. Is used to format data returned from the server. Used only when source is a service. |
 | focusOn      | false               | Boolean. Sets the focus on autocomplete on component init. Please note that on focus search is triggered. | 
 | optionSelected |                   |Output event. Clicking on any suggested option will raise this event. Event has current selected option as a param. |
