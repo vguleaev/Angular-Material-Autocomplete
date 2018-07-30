@@ -50,15 +50,15 @@ Component can be used as any form control because of implementing ControlValueAc
 | placeholder      | Text for placeholder |
 | source           | Source should be a simple any[] or service that implements 'AutocompleteService' interface. Autocomplete will call a 'fetch(params)' method and will pass HttpParams as argument, returning a Promise. HttpParams will containn a query string param with name 'query' that represents the autocomplete input current value. Any additional params can be passed with serviceParams attribute.  |
 | serviceParams    | Should be a value of type HttpParams. This params together with 'query' will ba passed to a service fetch function.|
-| minChars         | Number of minimum chars requered to start search. Default is 2. Set to 0 if you want that all the values available on empty input. |
-| doPrefetch       | Should be boolean. When active a prefetch is made on component initalization. Requires a service in source. After prefetch is done, result is stored in memory and search is done on local array. |
-| clearAfterSearch | Boolean. When active input clears after item select. |
-| hasProgressBar   | Boolean. When active shows a loading bar under input. Animation displays while request is doing. Works only when source is setup as service. |
+| minChars         | Number of minimum chars requered to start search. Default is 2. Set to 0 if you want all the values available on empty input. |
+| doPrefetch       | Should be boolean. When active, a prefetch is made on component initalization. Requires a service in source. After prefetch is done, result is stored in memory and search is done on local array. |
+| clearAfterSearch | Boolean. When active, input clears after item select. |
+| hasProgressBar   | Boolean. When active, shows a loading bar under input. Animation displays while request is doing. Works only when source is setup as service. |
 | hasSearchButton  | Boolean. Shows a search button near input. When button pressed s force search is done. Even if minChars value is bigger than current input value length, this button will do search. |
 | displayItem      | String. This string will be evaluated with eval() function to show formatted value in autocomplete suggestions list. Often result data is array of objects. if you want to display some property use 'item.myprop' string. The 'item' word is required. When search is done via service, search logic is done on the server. When source is an array, search logic is simple comparing strings. Result of the displayItem and input value will be compared. Eval function is dangerous and error prone. Better use displayItemFn which is a function. |
 | displayItemFn | Function. If not null, displayItemFn will be used instead of displayItem string to show item in autocomplete list. Example of display function: (x: string) => x + '$' |
-| displayTemplate | Should be a value of type TemplateRef. When this value is not null an html template will be rendered for each option ins autocomplete list. Please note that search is done by comparing input value with displayItem or displayItemFn executing result. |
-| canCreateNew | Boolean. When active shows a create button when no suggestions are found. | 
+| displayTemplate | Should be a value of type TemplateRef. When this value is not null an html template will be rendered for each option in autocomplete list. Please note that search is done by comparing input value with displayItem or displayItemFn executing result. |
+| canCreateNew | Boolean. When active, shows a create button when no suggestions are found. | 
 | addNewText   | String. Text to display near create button. Default is 'Add new'. | 
 | createNew    | Output event. Clicking on create new button rises this event and pass current input value as event param. | 
 | filterCallback | Function. Is used to format data returned from the server. Used only when source is a service. |
