@@ -61,17 +61,18 @@ For more examples [click here](https://google.com).
     </thead>
     <tbody>
         <tr>
-            <td rowspan=4>![#f03c15]Basic</td>
-            <td>placeholder</td>
-            <td> "Search" </td>
-            <td>Text for placeholder.</td>
-        </tr>
-        <tr>
-            <td>source</td>
+            <td rowspan=1>Required</td>
+            <td> <b>source</b> </td>
             <td> null </td>
             <td>Source should be a simple any[] or service that implements 'AutocompleteService' interface. Autocomplete will call a 'fetch(params)' method and will pass HttpParams as argument, returning a Promise. HttpParams will containn a query string param with name 'query' that represents the autocomplete input current value. Any additional params can be passed with serviceParams attribute.</td>
         </tr>
         <tr>
+            <td rowspan=3>Basic</td>
+            <td>placeholder</td>
+            <td> "Search" </td>
+            <td>Text for placeholder.
+        </tr>
+         <tr>
             <td>serviceParams</td>
             <td> null </td>
             <td>Should be a value of type HttpParams. This params together with 'query' will ba passed to a service fetch function.</td>
@@ -80,7 +81,7 @@ For more examples [click here](https://google.com).
             <td>minChars</td>
             <td> 2 </td>
             <td>Number of minimum chars requered to start search. Default is 2. Set to 0 if you want all the values available on empty input.</td>
-        </tr>
+        </tr>       
     </tbody>
 </table>
 
@@ -89,35 +90,32 @@ For more examples [click here](https://google.com).
 Component can be used as any form control because of implementing ControlValueAccessor.
 
 How to use this component:
-```html
-     
+```    
        <autocomplete
-         placeholder="Search"
-         [source] = "AutocompleteService | any[]"    
-         [serviceParams]= "HttpParams"               
-         [minChars] = "2"                            
-         [doPrefetch]= "false"                       
-         [clearAfterSearch] = "false"                
-         [hasProgressBar] = "false"                 
-         [hasSearchButton] = "false"                 
-         [validationErrors]="errors"                 
+       placeholder="Search"
+       [source] = "AutocompleteService | any[]"    
+       [serviceParams]= "HttpParams"               
+       [minChars] = "2"                            
+       [doPrefetch]= "false"                       
+       [clearAfterSearch] = "false"                
+       [hasProgressBar] = "false"                 
+       [hasSearchButton] = "false"                 
+       [validationErrors]="errors"                 
      
-         [displayItem] = "'item.name'"               
-         [displayItemFn] = "function"                
-         [displayTemplate] = "TemplateRef"           
+       [displayItem] = "'item.name'"               
+       [displayItemFn] = "function"                
+       [displayTemplate] = "TemplateRef"           
      
-         [showAddNew] = "false"                      
-         [addNewText] = "'Add new'"                 
-         (createNew) = "onCreateNew(inputValue)"    
-     
-         [transformResult] = "function"               
-         [isFocused]="true"                          
-     
-         (optionSelected)="onSelectCallback(item)" 
-     
-         [formControl]="form.controls['controlName']"   
-         [(ngModel)]="model.item"                      
-         (ngModelChange)="itemSelected(item)"
-        >
-        </autocomplete>
+       [showAddNew] = "false"                      
+       [addNewText] = "'Add new'"                 
+       (createNew) = "onCreateNew(inputValue)"   
+       [transformResult] = "function"               
+       [isFocused]="true"                          
+  
+      (optionSelected)="onSelectCallback(item)"    
+      [formControl]="form.controls['controlName']"   
+      [(ngModel)]="model.item"                      
+      (ngModelChange)="itemSelected(item)"
+     >
+     </autocomplete>
 ```
