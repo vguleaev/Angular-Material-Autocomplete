@@ -1,5 +1,5 @@
 # Angular Material Autocompelte
-This is a wrapper for standard [mat-autocomplete](https://material.angular.io/components/autocomplete/overview) made to simplify and minimize work with autocomplete inputs. It extends traditional behavior with new functionality such as form control binding, fetch from API service or data array, prefetch items on init, loading animation, template render for options in list. 
+This is a wrapper for standard [mat-autocomplete](https://material.angular.io/components/autocomplete/overview), made to simplify and minimize work with autocomplete inputs. It extends traditional behavior with new functionality such as form control binding, fetch from API service or data array, prefetch items on init, loading animation, template render for options in list. 
 
 See the [demo here.](https://vguleaev.github.io/Angular-Material-Autocomplete/)
 
@@ -28,7 +28,7 @@ Use component somewhere in html template
 <autocomplete> </autocomplete>
 ```
 
-For more examples [click here](#basic-examples).
+For more examples [click here](#examples).
      
  ## Documentation
  
@@ -39,7 +39,7 @@ For more examples [click here](#basic-examples).
 
 | Attribute        | Default Value   |  Description |
 | -------------    | --------------  | ------------- |
-| **source**       | null            | Source can be a simple any[ ] or service that implements _'AutocompleteService'_ interface. <br/><br/> If source is a **service**, on every key press component will call a `service.fetch(params)` method and return a _Promise_. <br/>Argument `params` is object of type _HttpParams_ that will containt one single param called "query" having current input value. Any additional params can be passed with serviceParams attribute. <br/><br/>  If source is an **array**, a local filter is done. Result of displayItem or displayItemFn functions (which is a string) is checked if it contains input value. <br/><br/>For more examples [click here](#basic-examples).|
+| **source**       | null            | Source can be a simple any[ ] or service that implements _'AutocompleteService'_ interface. <br/><br/> If source is a **service**, on every key press component will call a `service.fetch(params)` method and return a _Promise_. <br/>Argument `params` is object of type _HttpParams_ that will containt one single param called "query" having current input value. Any additional params can be passed with serviceParams attribute. <br/><br/>  If source is an **array**, a local filter is done. Result of displayItem or displayItemFn functions (which is a string) is checked if it contains input value. <br/><br/>For more examples [click here](#basic-usage).|
 | **displayItem**      | 'item.name'     | String. This string will be evaluated with `eval()` function to show formatted value in autocomplete suggestions list. Often result data is array of objects. If you want to display some property use `'item.myprop'` string. The 'item' word is required. When search is done via service, search logic is done on the server. When source is an array, search logic is simple comparing strings. Result of the displayItem/displayItemFn and input value will be compared. Eval function is dangerous and error prone. Better use displayItemFn which is a function. |
 | **displayItemFn** | null               | Function. If not null, displayItemFn will be used instead of displayItem string to show item in autocomplete list. Example of display function: `(country: string) => country.name + country.code` |
 | displayTemplate | null             | Should be a value of type TemplateRef. When this value is not null an html template will be rendered for each option in autocomplete list. Please note that search is done by comparing input value with displayItem or displayItemFn executing result. |
@@ -117,7 +117,7 @@ Component can be used as any form control because of implementing ControlValueAc
 
 #### Basic usage
 
-Miminal number of attributes is one. You can create an items array of objects and pass it to `source` attribute.
+Miminal number of attributes is **one**. You can create an items array of objects and pass it to `source` attribute.
 
 ```javascript
   // in ts file
@@ -136,13 +136,13 @@ Miminal number of attributes is one. You can create an items array of objects an
   <autocomplete [source]="items"> </autocomplete>
 ```
 
-This will just work. Because of property of objects called `name`. Default displayItem string is `'item.name'`. If you want to show and search by property `code`, you can specify it in displayItem property.
+This will just work. Because of property of objects called `name`. Default displayItem string is `'item.name'`. If you want to show and search by property `code`, you can specify it in `displayItem` property.
 
 ```
   <autocomplete [source]="items" [displayItem]="'item.code'"> </autocomplete>
 ```
 
-You can also use disaplyItemFn attribute and provide here an anonymous function, if you want to have syntax checking, strong typing and refactor tools available.
+You can also use `disaplyItemFn` attribute and provide here an anonymous function, if you want to have syntax checking, strong typing and refactor tools available.
 
 ```javascript
   // in ts file
@@ -152,39 +152,85 @@ You can also use disaplyItemFn attribute and provide here an anonymous function,
   <autocomplete [source]="items" [displayItemFn]="displayItem"> </autocomplete>
 ```
 
+_If your items a simple array of strings. Use `diaplayItem = "item"`. Word "item" is requried for evaluation._
+
 #### Using service as a source
 
+You need to pass a service with implements _AutocompleteService_ interface into `source` proprerty.
 
+```javascript
+@Injectable()
+export class DataService implements AutocompleteService {
+    private _url = 'api/colors'; // fake api url
+
+    constructor(private _http: HttpClient) {}
+
+    fetch(params?: HttpParams): Promise<any> {
+        return this._http.get<any[]>(this._url, {params: params}).toPromise();
+    }
+}
+```
+
+Get this service into constructor via dependency injection and pass it to autocompelte `source`.
+
+```javascript
+  // in ts file
+  constructor(public dataService: DataService) {}
+  
+  // in html template
+  <autocomplete [source]="dataService" [displayItemFn]="displayItem"> </autocomplete>
+```
+We are expecting return data from server as an array of objects. If for example we get another format returned from the server like
+
+```
+{
+  items: any[],
+  total: nubmer
+}
+```
+
+You can use `transformResult` attribute to format the data returned from the server.
+
+```javascript
+  // in ts file
+  formatData = (data: any) => data.items;
+  
+  // in html template
+  <autocomplete [source]="dataService" 
+                [displayItemFn]="displayItem"
+                [transformResult]="formatData"> 
+  </autocomplete>
+```
 
 #### All available attributes example
 
 How to use this component:
 ```    
 <autocomplete
-      placeholder="Search country"
-      [source] = "dataService"    
-      [serviceParams]= "params"               
-      [minChars] = "2"                            
-      [doPrefetch]= "false"                       
-      [clearAfterSearch] = "false"                
-      [hasProgressBar] = "false"                 
-      [hasSearchButton] = "false"                 
-      [validationErrors]="errors"                 
+     placeholder="Search country"
+     [source] = "dataService"    
+     [serviceParams]= "params"               
+     [minChars] = "2"                            
+     [doPrefetch]= "false"                       
+     [clearAfterSearch] = "false"                
+     [hasProgressBar] = "false"                 
+     [hasSearchButton] = "false"                 
+     [validationErrors]="errors"                 
      
-      [displayItem] = "'item.name'"               
-      [displayItemFn] = "displayCountry"                
-      [displayTemplate] = "countryTemplate"           
+     [displayItem] = "'item.name'"               
+     [displayItemFn] = "displayCountry"                
+     [displayTemplate] = "countryTemplate"           
      
-      [showAddNew] = "false"                      
-      [addNewText] = "'Add new'"                 
-      (createNew) = "onCreateNew(inputValue)"   
-      [transformResult] = "formatCountries"               
-      [isFocused]="true"                          
+     [showAddNew] = "false"                      
+     [addNewText] = "'Add new'"                 
+     (createNew) = "onCreateNew(inputValue)"   
+     [transformResult] = "formatCountries"               
+     [isFocused]="true"                          
   
-     (optionSelected)="selectCountry(country)"    
-     [formControl]="form.controls['country']"   
-     [(ngModel)]="model.country"                      
-     (ngModelChange)="countryChanged(country)"
+    (optionSelected)="selectCountry(country)"    
+    [formControl]="form.controls['country']"   
+    [(ngModel)]="model.country"                      
+    (ngModelChange)="countryChanged(country)"
 >
 </autocomplete>
 ```
