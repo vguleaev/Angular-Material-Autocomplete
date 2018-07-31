@@ -111,37 +111,80 @@ For more examples [click here](#basic-examples).
     </tbody>
 </table>
 
-## Basic examples
+## Examples
 
 Component can be used as any form control because of implementing ControlValueAccessor.
 
+#### Basic usage
+
+Miminal number of attributes is one. You can create an items array of objects and pass it to `source` attribute.
+
+```javascript
+  // in ts file
+  items = [
+    { code: '0', name: 'Red' },
+    { code: '1', name: 'Blue' },
+    { code: '2', name: 'Green' },
+    { code: '3', name: 'Yellow' },
+    { code: '4', name: 'Black' },
+    { code: '5', name: 'Purple' },
+    { code: '6', name: 'White' },
+    { code: '7', name: 'Grey' },
+  ];
+  
+  // in html template
+  <autocomplete [source]="items"> </autocomplete>
+```
+
+This will just work. Because of property of objects called `name`. Default displayItem string is `'item.name'`. If you want to show and search by property `code`, you can specify it in displayItem property.
+
+```
+  <autocomplete [source]="items" [displayItem]="'item.code'"> </autocomplete>
+```
+
+You can also use disaplyItemFn attribute and provide here an anonymous function, if you want to have syntax checking, strong typing and refactor tools available.
+
+```javascript
+  // in ts file
+  displayItem = (x: any) => '# ' + x.code + ' name: ' + x.name.toUpperCase();
+  
+  // in html template
+  <autocomplete [source]="items" [displayItemFn]="displayItem"> </autocomplete>
+```
+
+#### Using service as a source
+
+
+
+#### All available attributes example
+
 How to use this component:
 ```    
-       <autocomplete
-       placeholder="Search"
-       [source] = "AutocompleteService | any[]"    
-       [serviceParams]= "HttpParams"               
-       [minChars] = "2"                            
-       [doPrefetch]= "false"                       
-       [clearAfterSearch] = "false"                
-       [hasProgressBar] = "false"                 
-       [hasSearchButton] = "false"                 
-       [validationErrors]="errors"                 
+<autocomplete
+      placeholder="Search country"
+      [source] = "dataService"    
+      [serviceParams]= "params"               
+      [minChars] = "2"                            
+      [doPrefetch]= "false"                       
+      [clearAfterSearch] = "false"                
+      [hasProgressBar] = "false"                 
+      [hasSearchButton] = "false"                 
+      [validationErrors]="errors"                 
      
-       [displayItem] = "'item.name'"               
-       [displayItemFn] = "function"                
-       [displayTemplate] = "TemplateRef"           
+      [displayItem] = "'item.name'"               
+      [displayItemFn] = "displayCountry"                
+      [displayTemplate] = "countryTemplate"           
      
-       [showAddNew] = "false"                      
-       [addNewText] = "'Add new'"                 
-       (createNew) = "onCreateNew(inputValue)"   
-       [transformResult] = "function"               
-       [isFocused]="true"                          
+      [showAddNew] = "false"                      
+      [addNewText] = "'Add new'"                 
+      (createNew) = "onCreateNew(inputValue)"   
+      [transformResult] = "formatCountries"               
+      [isFocused]="true"                          
   
-      (optionSelected)="onSelectCallback(item)"    
-      [formControl]="form.controls['controlName']"   
-      [(ngModel)]="model.item"                      
-      (ngModelChange)="itemSelected(item)"
-     >
-     </autocomplete>
+     (optionSelected)="selectCountry(country)"    
+     [formControl]="form.controls['country']"   
+     [(ngModel)]="model.country"                      
+     (ngModelChange)="countryChanged(country)"
+>
+</autocomplete>
 ```
