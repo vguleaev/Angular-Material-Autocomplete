@@ -22,13 +22,17 @@ Import module with
 import { DynamicAutocompleteModule } from '../../node_modules/@vguleaev/angular-material-autocomplete';
 ```
 
-Use component somewhere in html template `<autocomplete></autocomplete>`
+Use component somewhere in html template 
+
+```
+<autocomplete> </autocomplete>
+```
 
 For more examples [click here](https://google.com).
      
  ## Documentation
  
-**source** and **displayItem** or **displayFn** are required attributes. Required attributes are marked as **bold text.**
+> **source** and **displayItem** or **displayFn** are required attributes. Required attributes are marked as **bold text.**
 
 | Attribute        | Default Value   |  Description |
 | -------------    | --------------  | ------------- |
