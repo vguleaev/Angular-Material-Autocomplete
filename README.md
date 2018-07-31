@@ -28,7 +28,7 @@ Use component somewhere in html template
 <autocomplete> </autocomplete>
 ```
 
-For more examples [click here](https://github.com/vguleaev/Angular-Material-Autocomplete/blob/master/README.md#basic-examples).
+For more examples [click here](#basic-examples).
      
  ## Documentation
  
