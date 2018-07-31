@@ -115,7 +115,7 @@ For more examples [click here](#examples).
 
 Component can be used as any form control because of implementing ControlValueAccessor.
 
-#### Basic usage
+### Basic usage
 
 Miminal number of attributes is **one**. You can create an items array of objects and pass it to `source` attribute.
 
@@ -142,7 +142,7 @@ This will just work. Because of property of objects called `name`. Default displ
   <autocomplete [source]="items" [displayItem]="'item.code'"> </autocomplete>
 ```
 
-You can also use `disaplyItemFn` attribute and provide here an anonymous function, if you want to have syntax checking, strong typing and refactor tools available.
+You can also use `disaplyItemFn` attribute and provide an anonymous function. It helps on syntax checking, strong typing and refactor tools available.
 
 ```javascript
   // in ts file
@@ -152,9 +152,9 @@ You can also use `disaplyItemFn` attribute and provide here an anonymous functio
   <autocomplete [source]="items" [displayItemFn]="displayItem"> </autocomplete>
 ```
 
-_If your items a simple array of strings. Use `diaplayItem = "item"`. Word "item" is requried for evaluation._
+_If your items are simple array of strings. Use `diaplayItem = "item"`. Word "item" is requried for code evaluation._
 
-#### Using service as a source
+### Using service as a source
 
 You need to pass a service with implements _AutocompleteService_ interface into `source` proprerty.
 
@@ -202,7 +202,7 @@ You can use `transformResult` attribute to format the data returned from the ser
   </autocomplete>
 ```
 
-#### All available attributes example
+### All available attributes example
 
 How to use this component:
 ```    
