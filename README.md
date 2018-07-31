@@ -40,13 +40,13 @@ For more examples [click here](#examples).
 | Attribute        | Default Value   |  Description |
 | -------------    | --------------  | ------------- |
 | **source**       | null            | Source can be a simple any[ ] or service that implements _'AutocompleteService'_ interface. <br/><br/> If source is a **service**, on every key press component will call a `service.fetch(params)` method and return a _Promise_. <br/>Argument `params` is object of type _HttpParams_ that will containt one single param called "query" having current input value. Any additional params can be passed with serviceParams attribute. <br/><br/>  If source is an **array**, a local filter is done. Result of displayItem or displayItemFn functions (which is a string) is checked if it contains input value. <br/><br/>For more examples [click here](#basic-usage).|
-| **displayItem**      | 'item.name'     | String. This string will be evaluated with `eval()` function to show formatted value in autocomplete suggestions list. Often result data is array of objects. If you want to display some property use `'item.myprop'` string. The 'item' word is required. When search is done via service, search logic is done on the server. When source is an array, search logic is simple comparing strings. Result of the displayItem/displayItemFn and input value will be compared. Eval function is dangerous and error prone. Better use displayItemFn which is a function. |
-| **displayItemFn** | null               | Function. If not null, displayItemFn will be used instead of displayItem string to show item in autocomplete list. Example of display function: `(country: string) => country.name + country.code` |
-| displayTemplate | null             | Should be a value of type TemplateRef. When this value is not null an html template will be rendered for each option in autocomplete list. Please note that search is done by comparing input value with displayItem or displayItemFn executing result. |
+| **displayItem**      | 'item.name'     | String. This string will be evaluated with `eval()` function to show formatted value in autocomplete suggestions list. Often result data is array of objects. If you want to display some property use `'item.myprop'` string. The 'item' word is required. <br/><br/> When search is done via service, search logic is done on the server. When source is an array, search logic is simple comparing strings. Result of the `displayItem/displayItemFn` and input value will be compared. Eval function is dangerous and error prone. Better use `displayItemFn` which is a function. |
+| **displayItemFn** | null               | Function. If not null, `displayItemFn` will be used instead of `displayItem` string to show item in autocomplete list. Example of display function: <br/> `(country: string) => country.name + country.code` |
+| displayTemplate | null             | Should be a value of type _TemplateRef_. When this value is not null an html template will be rendered for each option in autocomplete list. <br/>Please note that search is done by comparing input value with displayItem or displayItemFn executing result.<br/><br/>For more examples [click here](#template-usage). |
 | serviceParams    | null            | Should be a value of type HttpParams. This params together with 'query' will ba passed to a service fetch function.|
-| placeholder      |  "Search"       |Text for placeholder. |
+| placeholder      |  "Search"       | Text for placeholder. |
 | minChars         | 2               | Number of minimum chars requered to start search. Default is 2. Set to 0 if you want all the values available on empty input. |
-| doPrefetch       | false           | Should be boolean. When active, a prefetch is made on component initalization. Requires a service in source. After prefetch is done, result is stored in memory and search is done on local array. |
+| doPrefetch       | false           | Should be boolean. When active, a prefetch is done on component initalization. Requires a service in source. After prefetch is done, result is stored in memory and search is done on local array. |
 | clearAfterSearch | false           | Boolean. When active, input clears after item select. |
 | hasProgressBar   | false           | Boolean. When active, shows a loading bar under input. Animation displays while request is doing. Works only when source is setup as service. |
 | hasSearchButton  | false           | Boolean. Shows a search button near input. When button pressed s force search is done. Even if minChars value is bigger than current input value length, this button will do search. |
@@ -201,6 +201,8 @@ You can use `transformResult` attribute to format the data returned from the ser
                 [transformResult]="formatData"> 
   </autocomplete>
 ```
+
+### Template usage
 
 ### All available attributes example
 
