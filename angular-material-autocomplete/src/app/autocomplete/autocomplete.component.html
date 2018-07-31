@@ -41,7 +41,7 @@
     <mat-option *ngIf="query && noSuggestions" disabled>
       <span>Sorry, no suggestions were found</span>
     </mat-option>
-    <mat-option *ngIf="query && noSuggestions && canCreateNew" [value]="query" (click)="onCreateNew()">
+    <mat-option *ngIf="query && noSuggestions && showAddNew" [value]="query" (click)="onCreateNew()">
       <mat-icon class="add-icon">add</mat-icon> <span class="create-new"> {{addNewText}} </span>
     </mat-option>
   </mat-autocomplete>

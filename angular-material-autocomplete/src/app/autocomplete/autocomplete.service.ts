@@ -1,5 +1,5 @@
 import { HttpParams } from "@angular/common/http";
 
-export interface AutocompleteService<T> {
-    fetch(params?: HttpParams): Promise<T[]>;
+export interface AutocompleteService {
+    fetch(params?: HttpParams): Promise<any>;
 }

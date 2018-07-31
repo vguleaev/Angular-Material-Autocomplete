@@ -20,37 +20,37 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
    *
    *  <autocomplete
    *    placeholder="Search"
-   *    [minChars] = "2"                            // start fetch items after min chars amount, default is 2
-   *    [source]="AutocompleteService | any[]"      // source can be service or array, when array is passed filter is done local
-   *    [serviceParams]= "HttpParams"               // sets HttpParams for service fetch function
-   *    [doPrefetch]= "false"                       // when active, service do fetch items on init
-   *    [clearAfterSearch] = "false"                // clears input after item select
-   *    [hasProgressBar] = "false"                  // adds loading while making request
-   *    [hasSearchButton] = "false"                 // adds search button near input
-   *    [validationErrors]="errors"                 // string[] every sting in array displays as mat-error
+   *    [minChars] = "2"                             // start fetch items after min chars amount, default is 2
+   *    [source]="AutocompleteService | any[]"       // source can be service or array, when array is passed filter is done local
+   *    [serviceParams]= "HttpParams"                // sets HttpParams for service fetch function
+   *    [doPrefetch]= "false"                        // when active, service do fetch items on init
+   *    [clearAfterSearch] = "false"                 // clears input after item select
+   *    [hasProgressBar] = "false"                   // adds loading while making request
+   *    [hasSearchButton] = "false"                  // adds search button near input
+   *    [validationErrors]="errors"                  // string[] every sting in array displays as mat-error
    *
-   *    displayItem = "item.name"                   // text will be evaluated and executed, better use displayItemFn for function
-   *    [displayTemplate] = "TemplateRef"           // template reference for autocomplete options, displayItem or displayTemplate
+   *    displayItem = "item.name"                    // text will be evaluated and executed, better use displayItemFn for function
+   *    [displayTemplate] = "TemplateRef"            // template reference for autocomplete options, displayItem or displayTemplate
    *
-   *    [canCreateNew] = "false"                    // adds create button when no suggestions
-   *    [addNewText] = "'Add new'"                  // text to display near create button
-   *    (createNew) = "onCreateNew($event)"         // rises an event when click on create button
+   *    [showAddNew] = "false"                       // shows create button when no suggestions
+   *    [addNewText] = "'Add new'"                   // text to display near create button
+   *    (createNew) = "onCreateNew(inputValue)"      // rises an event when click on create button
    *
-   *    [filterCallback] = "function"               // callback function to format data from server response
-   *    [focusOn]="true"                            // sets focus that triggers fetch
+   *    [transformResult] = "function"               // callback function to format data from server response
+   *    [isFocused]="true"                           // sets focus that triggers fetch
    *
-   *    (optionSelected)="onSelectCallback($event)" // get selected item from event
+   *    (optionSelected)="onSelectCallback(item)"    // get selected item from event
    *
-   *    [formControl]="form.controls['controlName']"      // access it as any form control
-   *    [(ngModel)]="model.item"                          // or just use model binding
+   *    [formControl]="form.controls['controlName']" // access it as any form control
+   *    [(ngModel)]="model.item"                     // or just use model binding
    *    (ngModelChange)="itemSelected($event)"
    *
    *  ></autocomplete>
    */
 
-  @Input() set source(value: AutocompleteService<any> | any[]) {
+  @Input() set source(value: AutocompleteService | any[]) {
     if (this.isAutocompleteService(value)) {
-      this.service = value as AutocompleteService<any>;
+      this.service = value as AutocompleteService;
     } else
     if (value instanceof Array) {
       this.storedItems = value.slice(0);
@@ -67,14 +67,14 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   @Input() hasProgressBar = false;
   @Input() minChars = 2;
   @Input() clearAfterSearch = false;
-  @Input() canCreateNew = false;
+  @Input() showAddNew = false;
   @Input() addNewText = "Add new";
-  @Input() focusOn = false;
+  @Input() isFocused = false;
   @Input() validationErrors: string[] = [];
   @Input() serviceParams?: HttpParams;
   @Input() displayItemFn?: (item: any) => string;
   @Input() displayTemplate?: TemplateRef<any>;
-  @Input() filterCallback: any = (x: any[]) => x;
+  @Input() transformResult: any = (x: any[]) => x;
 
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() optionSelected = new EventEmitter();
@@ -91,7 +91,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   public requestsInQueue = 0;
 
   private storedItems?: any[];
-  private service?: AutocompleteService<any>;
+  private service?: AutocompleteService;
   private returnType: string;
 
   constructor() {}
@@ -104,7 +104,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   }
 
   ngAfterViewInit() {
-    if (this.focusOn) {
+    if (this.isFocused) {
       setTimeout(() => {
         this.autocompleteInput.nativeElement.focus();
       });
@@ -125,7 +125,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
     }
 
     this.service.fetch(params).then((result: any) => {
-      this.storedItems = this.filterCallback(result);
+      this.storedItems = this.transformResult(result);
       this.noSuggestions = result.length === 0;
       this.saveReturnType(this.storedItems);
     });
@@ -165,7 +165,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
       this.service.fetch(params)
         .then((result: any) => {
           this.requestsInQueue = this.requestsInQueue - 1;
-          this.autocompleteList = this.filterCallback(result);
+          this.autocompleteList = this.transformResult(result);
           this.noSuggestions = result.length === 0;
           this.saveReturnType(this.autocompleteList);
         });
@@ -302,7 +302,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
     return query.length <= 0;
   }
 
-  private isAutocompleteService(object: any): object is AutocompleteService<any> {
+  private isAutocompleteService(object: any): object is AutocompleteService {
     return object && "fetch" in object;
   }
 

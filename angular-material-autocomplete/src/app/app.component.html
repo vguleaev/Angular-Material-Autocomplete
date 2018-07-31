@@ -11,9 +11,9 @@
       [(ngModel)]="model"
       [hasProgressBar]="true" 
       [displayTemplate]="itemTemplate" 
-      [canCreateNew]="true" 
+      [showAddNew]="true" 
       (createNew)="createNew($event)" 
-      [focusOn]="false"
+      [isFocused]="false"
     >
     </autocomplete>
 
