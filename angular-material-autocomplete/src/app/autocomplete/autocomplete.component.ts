@@ -62,7 +62,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   @Input() placeholder = "";
   @Input() formControl?: FormControl;
   @Input() doPrefetch = false;
-  @Input() displayItem?: string;
+  @Input() displayItem? = "item.name";
   @Input() hasSearchButton = false;
   @Input() hasProgressBar = false;
   @Input() minChars = 2;
