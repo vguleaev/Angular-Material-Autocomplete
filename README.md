@@ -183,7 +183,9 @@ Clicking on that button will raise an event `(createNew)` with current input tex
                 [addNewText] = "'Add new country'"
                 (createnew)="createNew(text)"> 
   </autocomplete>
-  
+```
+
+```javascript
   // in ts file
   public createNew(value: string) {
     const newName = prompt('Enter new name for a country', value);
