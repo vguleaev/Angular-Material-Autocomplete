@@ -34,7 +34,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
    *
    *    [showAddNew] = "false"                       // shows create button when no suggestions
    *    [addNewText] = "'Add new'"                   // text to display near create button
-   *    (createNew) = "onCreateNew(inputValue)"      // rises an event when click on create button
+   *    (createNew) = "onCreateNew($event)"      // rises an event when click on create button
    *
    *    [transformResult] = "function"               // callback function to format data from server response
    *    [isFocused]="true"                           // sets focus that triggers fetch
