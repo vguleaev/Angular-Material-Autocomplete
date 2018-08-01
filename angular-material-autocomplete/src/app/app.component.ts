@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   ];
 
   items2 = ['1', '2', '3', '4'];
+  displayItem = (x: any) => 'code: 0' + x.code + ' || name: ' + x.name.toUpperCase();
 
   constructor(public dataService: DataService) {}
 

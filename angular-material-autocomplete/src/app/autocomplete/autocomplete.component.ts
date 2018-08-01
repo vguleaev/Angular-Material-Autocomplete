@@ -5,7 +5,7 @@ import { HttpParams } from "@angular/common/http";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from "@angular/forms";
 
 @Component({
-  selector: "autocomplete",
+  selector: "ng-mat-autocomplete",
   templateUrl: "./autocomplete.component.html",
   styleUrls: ["./autocomplete.component.scss"],
   providers: [{
@@ -18,7 +18,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   /**
    *  How to use this component:
    *
-   *  <autocomplete
+   *  <ng-mat-autocomplete
    *    placeholder="Search"
    *    [minChars] = "2"                             // start fetch items after min chars amount, default is 2
    *    [source]="AutocompleteService | any[]"       // source can be service or array, when array is passed filter is done local
@@ -45,7 +45,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
    *    [(ngModel)]="model.item"                     // or just use model binding
    *    (ngModelChange)="itemSelected($event)"
    *
-   *  ></autocomplete>
+   *  ></ng-mat-autocomplete>
    */
 
   @Input() set source(value: AutocompleteService | any[]) {

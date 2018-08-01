@@ -3,7 +3,7 @@
   <h2>Select a country: </h2>
 
   <mat-card>
-    <autocomplete 
+    <ng-mat-autocomplete 
       [hasSearchButton]="true" 
       [source]="dataService" 
       [minChars]="1" 
@@ -15,7 +15,7 @@
       (createNew)="createNew($event)" 
       [isFocused]="false"
     >
-    </autocomplete>
+    </ng-mat-autocomplete >
 
     <button mat-raised-button (click)="showSelected()"> Submit </button>
   </mat-card>

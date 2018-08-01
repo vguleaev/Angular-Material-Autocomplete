@@ -22,4 +22,4 @@ import { AutocompleteComponent } from './autocomplete.component';
   declarations: [AutocompleteComponent],
   exports: [AutocompleteComponent]
 })
-export class DynamicAutocompleteModule { }
+export class NgMatAutocompleteModule { }
