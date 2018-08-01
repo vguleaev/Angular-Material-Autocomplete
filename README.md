@@ -176,7 +176,7 @@ You can implement a possibility to create a new option if no suggestion found. T
 You can change the default text to any other string using `addNewText` attribute. 
 Clicking on that button will raise an event `(createNew)` with current input text as a param. Subscribe to this event to implement the logic.
 
-```javascript
+```
   // in html template
   <autocomplete [source]="items"
                 [showAddNew] = "true
@@ -184,7 +184,7 @@ Clicking on that button will raise an event `(createNew)` with current input tex
                 (createnew)="createNew(text)"> 
   </autocomplete>
   
-  //in ts file
+  // in ts file
   public createNew(value: string) {
     const newName = prompt('Enter new name for a country', value);
     this.items.push({code: '99', name: newName});
