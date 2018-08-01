@@ -258,6 +258,10 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   }
 
   public onFocus($event: any) {
+    if (this.selectedOption) {
+      return;
+    }
+
     if (this.doSearchViaService) {
       this.fetch();
     } else {
