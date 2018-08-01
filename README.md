@@ -3,7 +3,7 @@ This is a wrapper for standard [mat-autocomplete](https://material.angular.io/co
 
 See the [demo here.](https://vguleaev.github.io/Angular-Material-Autocomplete/)
 
-![alt text](https://pp.userapi.com/c845417/v845417502/b1b35/QT0YqgKaKb4.jpg)
+![example](https://pp.userapi.com/c845417/v845417502/b1b35/QT0YqgKaKb4.jpg)
 
 ## Getting started
 
@@ -51,7 +51,7 @@ For more examples [click here](#examples).
 | hasProgressBar   | false           | Boolean. When active, shows a loading bar under input. Animation displays while request is doing. Works only when source is setup as service. |
 | hasSearchButton  | false           | Boolean. Shows a search button near input. When button pressed s force search is done. Even if `minChars` value is bigger than current input text length, this button will start search. |
 | (optionSelected) |      event         | Output event. Clicking on any suggested option will raise this event. Event returns current selected option as a param. |
-| showAddNew       | false                 | Boolean. When active, shows a create button when no suggestions are found. | 
+| showAddNew       | false                 | Boolean. When active, shows a create button when no suggestions are found. Click here for [example](#add-new-suggestion).| 
 | addNewText      | "Add new"           | String. Text to display near create button. | 
 | (createNew)      |     event            | Output event. Clicking on create new button raises this event and pass current input value as event param. | 
 | transformResult | `x: any[] => x`     | Function. Is used to format data returned from the server. Used only when source is a service. |
@@ -150,6 +150,47 @@ You can use `transformResult` attribute to format the data returned from the ser
 ```
 
 ### Template usage
+
+You can use an html template to display options in list. `diplayItem` and `displayItemFn` result will be replaced with template render, but **local search** (if source is array) will be anyway done by comparing display functions result.
+
+To do this simply define local template variable and assign it to `displayTempalte` attribute.
+
+```javascript
+  // in html template
+  <autocomplete [source]="dataService" 
+                [displayItemFn]="displayItem"
+                [displayTemplate]="itemTemplate"> 
+  </autocomplete>
+  
+   <ng-template #itemTemplate let-item>
+      <mat-icon>flag</mat-icon> {{item.name}} | {{item.code}}
+  </ng-template>
+```
+
+### Add new suggestion
+
+You can implement a possibility to create a new option if no suggestion found. To do this set attribute `showAddNew` to true. 
+
+![alt text](https://pp.userapi.com/c845421/v845421060/b219c/2N4HhXybWZE.jpg)
+
+You can change the default text to any other string using `addNewText` attribute. 
+Clicking on that button will raise an event `(createNew)` with current input text as a param. Subscribe to this event to implement the logic.
+
+```javascript
+  // in html template
+  <autocomplete [source]="items"
+                [showAddNew] = "true
+                [addNewText] = "'Add new country'"
+                (createnew)="createNew(text)"> 
+  </autocomplete>
+  
+  //in ts file
+  public createNew(value: string) {
+    const newName = prompt('Enter new name for a country', value);
+    this.items.push({code: '99', name: newName});
+    this.items = this.items.slice(0);
+  }
+```
 
 ### All available attributes example
 
