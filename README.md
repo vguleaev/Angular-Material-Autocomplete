@@ -19,13 +19,13 @@ npm install @angular/material @angular/cdk
 
 Import module with 
 ```
-import { DynamicAutocompleteModule } from '../../node_modules/@vguleaev/angular-material-autocomplete';
+import { NgMatAutocompleteModule } from '../../node_modules/@vguleaev/angular-material-autocomplete';
 ```
 
 Use component somewhere in html template 
 
 ```
-<autocomplete> </autocomplete>
+<ng-mat-autocomplete> </ng-mat-autocomplete>
 ```
 
 For more examples [click here](#examples).
@@ -86,7 +86,7 @@ Miminal number of attributes is **one**. You can create an items array of object
 This will just work. Because of property of objects called `name`. Default displayItem string is `'item.name'`. If you want to show and search by property `code`, you can specify it in `displayItem` property.
 
 ```
-  <autocomplete [source]="items" [displayItem]="'item.code'"> </autocomplete>
+  <ng-mat-autocomplete [source]="items" [displayItem]="'item.code'"> </ng-mat-autocomplete>
 ```
 
 You can also use `disaplyItemFn` attribute and provide an anonymous function. It helps on syntax checking, strong typing and refactor tools available.
@@ -96,7 +96,7 @@ You can also use `disaplyItemFn` attribute and provide an anonymous function. It
   displayItem = (x: any) => '# ' + x.code + ' name: ' + x.name.toUpperCase();
   
   // in html template
-  <autocomplete [source]="items" [displayItemFn]="displayItem"> </autocomplete>
+  <ng-mat-autocomplete [source]="items" [displayItemFn]="displayItem"> </ng-mat-autocomplete>
 ```
 
 _If your items are simple array of strings. Use `diaplayItem = "item"`. Word "item" is requried for code evaluation._
@@ -125,7 +125,7 @@ Get this service into constructor via dependency injection and pass it to autoco
   constructor(public dataService: DataService) {}
   
   // in html template
-  <autocomplete [source]="dataService" [displayItemFn]="displayItem"> </autocomplete>
+  <ng-mat-autocomplete [source]="dataService" [displayItemFn]="displayItem"> </ng-mat-autocomplete>
 ```
 We are expecting return data from server as an array of objects. If for example we get another format returned from the server like
 
@@ -143,10 +143,10 @@ You can use `transformResult` attribute to format the data returned from the ser
   formatData = (data: any) => data.items;
   
   // in html template
-  <autocomplete [source]="dataService" 
-                [displayItemFn]="displayItem"
-                [transformResult]="formatData"> 
-  </autocomplete>
+  <ng-mat-autocomplete [source]="dataService" 
+                       [displayItemFn]="displayItem"
+                       [transformResult]="formatData"> 
+  </ng-mat-autocomplete>
 ```
 
 ### Template usage
@@ -157,10 +157,10 @@ To do this simply define local template variable and assign it to `displayTempal
 
 ```javascript
   // in html template
-  <autocomplete [source]="dataService" 
-                [displayItemFn]="displayItem"
-                [displayTemplate]="itemTemplate"> 
-  </autocomplete>
+  <ng-mat-autocomplete [source]="dataService" 
+                       [displayItemFn]="displayItem"
+                       [displayTemplate]="itemTemplate"> 
+  </ng-mat-autocomplete>
   
    <ng-template #itemTemplate let-item>
       <mat-icon>flag</mat-icon> {{item.name}} | {{item.code}}
@@ -178,11 +178,11 @@ Clicking on that button will raise an event `(createNew)` with current input tex
 
 ```
   // in html template
-  <autocomplete [source]="items"
-                [showAddNew] = "true
-                [addNewText] = "'Add new country'"
-                (createnew)="createNew(text)"> 
-  </autocomplete>
+  <ng-mat-autocomplete [source]="items"
+                       [showAddNew] = "true
+                       [addNewText] = "'Add new country'"
+                       (createnew)="createNew(text)"> 
+  </ng-mat-autocomplete>
 ```
 
 ```javascript
@@ -198,31 +198,31 @@ Clicking on that button will raise an event `(createNew)` with current input tex
 
 How to use this component:
 ```    
-<autocomplete
-     placeholder="Search country"
-     [source] = "dataService"    
-     [serviceParams]= "params"               
-     [minChars] = "2"                            
-     [doPrefetch]= "false"                       
-     [clearAfterSearch] = "false"                
-     [hasProgressBar] = "false"                 
-     [hasSearchButton] = "false"                 
-     [validationErrors]="errors"                 
+<ng-mat-autocomplete
+    placeholder="Search country"
+    [source] = "dataService"    
+    [serviceParams]= "params"               
+    [minChars] = "2"                            
+    [doPrefetch]= "false"                       
+    [clearAfterSearch] = "false"                
+    [hasProgressBar] = "false"                 
+    [hasSearchButton] = "false"                 
+    [validationErrors]="errors"                 
+    [transformResult] = "formatCountries"               
+    [isFocused]="true" 
+    (optionSelected)="selectCountry(country)"     
      
-     [displayItem] = "'item.name'"               
-     [displayItemFn] = "displayCountry"                
-     [displayTemplate] = "countryTemplate"           
+    [displayItem] = "'item.name'"               
+    [displayItemFn] = "displayCountry"                
+    [displayTemplate] = "countryTemplate"           
      
-     [showAddNew] = "false"                      
-     [addNewText] = "'Add new'"                 
-     (createNew) = "onCreateNew(inputValue)"   
-     [transformResult] = "formatCountries"               
-     [isFocused]="true"                          
-  
-    (optionSelected)="selectCountry(country)"    
+    [showAddNew] = "false"                      
+    [addNewText] = "'Add new'"                 
+    (createNew) = "onCreateNew(inputValue)"   
+                         
     [formControl]="form.controls['country']"   
     [(ngModel)]="model.country"                      
     (ngModelChange)="countryChanged(country)"
 >
-</autocomplete>
+</ng-mat-autocomplete>
 ```
