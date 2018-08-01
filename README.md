@@ -149,6 +149,23 @@ You can use `transformResult` attribute to format the data returned from the ser
   </ng-mat-autocomplete>
 ```
 
+To get a selected option subscribe to `optionSelected` event. 
+
+```
+  <ng-mat-autocomplete [source]="dataService" 
+                       [displayItemFn]="displayItem"
+                       [transformResult]="formatData"> 
+                       (optionSelected)="select($event)"  
+  </ng-mat-autocomplete>
+```
+
+```
+  // in ts file
+  public select(color: any) {
+    alert('You selected color:' + color.name);
+  }
+```
+
 ### Template usage
 
 You can use an html template to display options in list. `diplayItem` and `displayItemFn` result will be replaced with template render, but **local search** (if source is array) will be anyway done by comparing display functions result.
@@ -181,7 +198,7 @@ Clicking on that button will raise an event `(createNew)` with current input tex
   <ng-mat-autocomplete [source]="items"
                        [showAddNew] = "true
                        [addNewText] = "'Add new country'"
-                       (createnew)="createNew(text)"> 
+                       (createnew)="createNew($event)"> 
   </ng-mat-autocomplete>
 ```
 
@@ -210,7 +227,7 @@ How to use this component:
     [validationErrors]="errors"                 
     [transformResult] = "formatCountries"               
     [isFocused]="true" 
-    (optionSelected)="selectCountry(country)"     
+    (optionSelected)="selectCountry($event)"     
      
     [displayItem] = "'item.name'"               
     [displayItemFn] = "displayCountry"                
@@ -218,7 +235,7 @@ How to use this component:
      
     [showAddNew] = "false"                      
     [addNewText] = "'Add new'"                 
-    (createNew) = "onCreateNew(inputValue)"   
+    (createNew) = "onCreateNew($event)"   
                          
     [formControl]="form.controls['country']"   
     [(ngModel)]="model.country"                      
