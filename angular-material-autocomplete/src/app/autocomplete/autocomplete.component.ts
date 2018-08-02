@@ -166,7 +166,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
         .then((result: any) => {
           this.requestsInQueue = this.requestsInQueue - 1;
           this.autocompleteList = this.transformResult(result);
-          this.noSuggestions = result.length === 0;
+          this.noSuggestions = this.autocompleteList.length === 0;
           this.saveReturnType(this.autocompleteList);
         });
     }
