@@ -149,6 +149,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
     // empty query is not allowed for autocomplete
     if (this.isQueryEmpty(this.query) && this.minChars !== 0) {
       this.autocompleteList = [];
+      this.noSuggestions = false;
       return;
     }
 
@@ -159,7 +160,6 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
         params = this.serviceParams.set("query", this.query);
       }
 
-      this.noSuggestions = false;
       this.requestsInQueue = this.requestsInQueue + 1;
 
       this.service.fetch(params)
