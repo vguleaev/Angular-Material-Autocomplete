@@ -80,7 +80,7 @@ Miminal number of attributes is **one**. You can create an items array of object
   ];
   
   // in html template
-  <autocomplete [source]="items"> </autocomplete>
+  <ng-mat-autocomplete [source]="items"> </ng-mat-autocomplete>
 ```
 
 This will just work. Because of property of objects called `name`. Default displayItem string is `'item.name'`. If you want to show and search by property `code`, you can specify it in `displayItem` property.
