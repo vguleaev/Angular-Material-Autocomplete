@@ -218,6 +218,7 @@ How to use this component:
 ```    
 <ng-mat-autocomplete
     [placeholder]="'Search country'"
+    [floatLabel] = "'always'"
     [source] = "dataService"    
     [serviceParams]= "params"               
     [minChars] = "2"                            
