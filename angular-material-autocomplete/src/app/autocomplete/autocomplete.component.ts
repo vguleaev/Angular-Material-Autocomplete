@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output, TemplateRef, forwardRef } from "@angular/core";
-import { MatAutocomplete } from "@angular/material";
-import { AutocompleteService } from "./autocomplete.service";
-import { HttpParams } from "@angular/common/http";
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from "@angular/forms";
+import { AfterViewInit, Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output, TemplateRef, forwardRef } from '@angular/core';
+import { MatAutocomplete, FloatLabelType } from '@angular/material';
+import { AutocompleteService } from './autocomplete.service';
+import { HttpParams } from '@angular/common/http';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 
 @Component({
-  selector: "ng-mat-autocomplete",
-  templateUrl: "./autocomplete.component.html",
-  styleUrls: ["./autocomplete.component.scss"],
+  selector: 'ng-mat-autocomplete',
+  templateUrl: './autocomplete.component.html',
+  styleUrls: ['./autocomplete.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => AutocompleteComponent),
@@ -20,6 +20,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
    *
    *  <ng-mat-autocomplete
    *    placeholder="Search"
+   *    [floatLabel]="auto"                          // changes label floating behavior, can be 'always' | 'never' | 'auto'
    *    [minChars] = "2"                             // start fetch items after min chars amount, default is 2
    *    [source]="AutocompleteService | any[]"       // source can be service or array, when array is passed filter is done local
    *    [serviceParams]= "HttpParams"                // sets HttpParams for service fetch function
@@ -58,17 +59,18 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
     }
   }
 
-  @Input() name = "";
-  @Input() placeholder = "";
+  @Input() name = '';
+  @Input() placeholder = '';
+  @Input() floatLabel: FloatLabelType = 'auto';
   @Input() formControl?: FormControl;
   @Input() doPrefetch = false;
-  @Input() displayItem? = "item.name";
+  @Input() displayItem ? = 'item.name';
   @Input() hasSearchButton = false;
   @Input() hasProgressBar = false;
   @Input() minChars = 2;
   @Input() clearAfterSearch = false;
   @Input() showAddNew = false;
-  @Input() addNewText = "Add new";
+  @Input() addNewText = 'Add new';
   @Input() isFocused = false;
   @Input() validationErrors: string[] = [];
   @Input() serviceParams?: HttpParams;
@@ -80,11 +82,11 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   @Output() optionSelected = new EventEmitter();
   @Output() createNew = new EventEmitter();
 
-  @ViewChild("autocompleteInput") autocompleteInput: ElementRef;
-  @ViewChild("autocomplete") autocomplete: MatAutocomplete;
+  @ViewChild('autocompleteInput') autocompleteInput: ElementRef;
+  @ViewChild('autocomplete') autocomplete: MatAutocomplete;
 
   public selectedOption: any;
-  public query = "";
+  public query = '';
   public autocompleteList: any[] | null;
   public request = false;
   public noSuggestions: boolean;
@@ -97,7 +99,6 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   constructor() {}
 
   ngOnInit() {
-    this.placeholder = this.placeholder ? this.placeholder : "Search";
     if (this.doPrefetch) {
       this.prefetch();
     }
@@ -113,7 +114,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
 
   public prefetch() {
     if (!this.service) {
-      throw new Error("Service for prefetch is not defined in 'Source'");
+      throw new Error('Service for prefetch is not defined in \'Source\'');
     }
 
     this.storedItems = [];
@@ -141,7 +142,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
 
   public fetch(force?: boolean) {
     if (!this.service) {
-      throw new Error("Service for fetch is not defined in 'Source'");
+      throw new Error('Service for fetch is not defined in \'Source\'');
     }
 
     this.query = this.autocompleteInput.nativeElement.value;
@@ -155,9 +156,9 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
 
     if (force || this.query.length >= this.minChars) {
       let params = new HttpParams();
-      params = params.set("query", this.query);
+      params = params.set('query', this.query);
       if (this.serviceParams) {
-        params = this.serviceParams.set("query", this.query);
+        params = this.serviceParams.set('query', this.query);
       }
 
       this.requestsInQueue = this.requestsInQueue + 1;
@@ -174,7 +175,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
 
   public filterStoredItems(force?: boolean) {
     if (!this.displayItem && !this.displayItemFn) {
-      throw new Error("You must provide displayItem or displayItemFn for local search.");
+      throw new Error('You must provide displayItem or displayItemFn for local search.');
     }
 
     this.query = this.autocompleteInput.nativeElement.value;
@@ -194,7 +195,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
 
       this.autocompleteList = this.storedItems.filter(item => {
         if (!this.viewItem(item)) {
-          throw new Error("String to evaluate in displayItem was provided wrong. Better use displayItemFn");
+          throw new Error('String to evaluate in displayItem was provided wrong. Better use displayItemFn');
         }
 
         let formatedItem = this.viewItem(item).toLowerCase();
@@ -234,7 +235,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   public onKey($event: KeyboardEvent) {
     // prevent filtering results if arrow were pressed
     if ($event.keyCode < 37 || $event.keyCode > 40) {
-      if (this.autocompleteInput.nativeElement.value === "") {
+      if (this.autocompleteInput.nativeElement.value === '') {
         this.clearValue();
       }
       this.onKeyCallback();
@@ -282,8 +283,8 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
       this.formControl.reset();
     }
     this.selectedOption = null;
-    this.autocompleteInput.nativeElement.value = "";
-    this.query = "";
+    this.autocompleteInput.nativeElement.value = '';
+    this.query = '';
     this.onChange(this.selectedOption);
   }
 
@@ -307,7 +308,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   }
 
   private isAutocompleteService(object: any): object is AutocompleteService {
-    return object && "fetch" in object;
+    return object && 'fetch' in object;
   }
 
   private saveReturnType(items: any[] | undefined | null) {
@@ -336,6 +337,6 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   registerOnTouched(fn: any): void { this.onTouched = fn; }
 
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 }

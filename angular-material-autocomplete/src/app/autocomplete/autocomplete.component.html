@@ -1,4 +1,4 @@
-<mat-form-field class="input-container">
+<mat-form-field class="input-container" [floatLabel]="floatLabel">
   <input matInput
          *ngIf="formControl"
          [formControl]="formControl"
@@ -13,7 +13,7 @@
   <input matInput
          *ngIf="!formControl"
          [name]="name"
-         [matAutocomplete]="autocomplete"
+         [matAutocomplete]="autocomplete"       
          [placeholder]="placeholder"
          (keyup)="onKey($event)"
          (focus)="onFocus($event)"
