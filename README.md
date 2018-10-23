@@ -44,7 +44,7 @@ For more examples [click here](#examples).
 | **displayItemFn** | null               | Function. If not null, `displayItemFn` will be used instead of `displayItem` string to show item in autocomplete list. Example of display function: <br/> `(country: string) => country.name + country.code` |
 | displayTemplate | null             | Should be a value of type _TemplateRef_. When this value is not null an html template will be rendered for each option in autocomplete list. <br/><br/>Please note that search is done by comparing input value with `displayItem` or `displayItemFn` executing result.<br/><br/>For more examples [click here](#template-usage). |
 | serviceParams    | null            | Should be a value of type HttpParams. This params together with 'query' param will be passed to a service fetch function.|
-| floatLabel       |  "auto"         | Type of `FloatLabelType`. Set label floating behavior. Can be 'always' | 'never' | 'auto'. |
+| floatLabel       |  "auto"         | Type of `FloatLabelType`. Set label floating behavior. Can be 'always' or 'never' or 'auto'. |
 | placeholder      |  "Search"       | Text for placeholder. |
 | minChars         | 2               | Number of minimum chars requered to start search. Default is 2. Set to 0 if you want all the values available on empty input. |
 | doPrefetch       | false           | Should be boolean. When active, a prefetch is done on component initalization. Requires a service in source. After prefetch is done, result is stored in memory and search is done on local array. |
