@@ -1,6 +1,7 @@
 {
   "name": "@vguleaev/angular-material-autocomplete",
-  "version": "0.0.8",
+  "version": "0.0.9",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,6 +10,13 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "packagr": "ng-packagr -p ng-package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vguleaev/Angular-Material-Autocomplete.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vguleaev/Angular-Material-Autocomplete/issues"
   },
   "private": false,
   "dependencies": {
