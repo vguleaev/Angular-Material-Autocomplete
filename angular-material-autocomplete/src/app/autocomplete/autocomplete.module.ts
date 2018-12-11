@@ -7,7 +7,6 @@ import { AutocompleteComponent } from './autocomplete.component';
 
 @NgModule({
   imports: [
-    BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
