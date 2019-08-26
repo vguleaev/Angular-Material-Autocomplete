@@ -1,5 +1,5 @@
 # Angular Material Autocompelte
-This is a wrapper for standard [mat-autocomplete](https://material.angular.io/components/autocomplete/overview), made to simplify and minimize work with autocomplete inputs. It extends traditional behavior with new functionality such as form control binding, fetch from API service or data array, prefetch items on init, loading animation, template render for options in list. 
+This is a wrapper for standard [mat-autocomplete](https://material.angular.io/components/autocomplete/overview), made to simplify and minimize work with autocomplete inputs. It extends traditional behavior with new functionality such as form control binding, fetch from API service or data array, prefetch items on init, loading animation, template render for options in list.
 
 See the [demo here.](https://vguleaev.github.io/Angular-Material-Autocomplete/)
 
@@ -12,26 +12,26 @@ Install package via npm
 npm install @vguleaev/angular-material-autocomplete
 ```
 
-Requires Angular Material to be installed. 
+Requires Angular Material to be installed.
 ```
 npm install @angular/material @angular/cdk
 ```
 
-Import module with 
+Import module with
 ```
 import { NgMatAutocompleteModule } from '../../node_modules/@vguleaev/angular-material-autocomplete';
 ```
 
-Use component somewhere in html template 
+Use component somewhere in html template
 
 ```
 <ng-mat-autocomplete> </ng-mat-autocomplete>
 ```
 
 For more examples [click here](#examples).
-     
+
  ## Documentation
- 
+
 ### Required attributes are marked as **bold text.** ###
 
 **source** and **displayItem** or **displayItemFn** are required attributes.
@@ -52,12 +52,13 @@ For more examples [click here](#examples).
 | hasProgressBar   | false           | Boolean. When active, shows a loading bar under input. Animation displays while request is doing. Works only when source is setup as service. |
 | hasSearchButton  | false           | Boolean. Shows a search button near input. When button pressed s force search is done. Even if `minChars` value is bigger than current input text length, this button will start search. |
 | (optionSelected) |      event         | Output event. Clicking on any suggested option will raise this event. Event returns current selected option as a param. |
-| showAddNew       | false                 | Boolean. When active, shows a create button when no suggestions are found. Click here for [example](#add-new-suggestion).| 
-| addNewText      | "Add new"           | String. Text to display near create button. | 
-| (createNew)      |     event            | Output event. Clicking on create new button raises this event and pass current input value as event param. | 
+| showAddNew       | false                 | Boolean. When active, shows a create button when no suggestions are found. Click here for [example](#add-new-suggestion).|
+| addNewText      | "Add new"           | String. Text to display near create button. |
+| (createNew)      |     event            | Output event. Clicking on create new button raises this event and pass current input value as event param. |
+| noSuggestionsText | "Sorry, No suggestions were found" | String. text to display when no suggestions found |
 | transformResult | `x: any[] => x`     | Function. Is used to format data returned from the server. Used only when source is a service. |
 | validationErrors | [ ]             | String[ ]. Every sting in array displays as mat-error under input. |
-| isFocused       | false             | Boolean. Sets the focus on autocomplete on component init. <br/><br/>Please note that on focus search is triggered. | 
+| isFocused       | false             | Boolean. Sets the focus on autocomplete on component init. <br/><br/>Please note that on focus search is triggered. |
 
 ## Examples
 
@@ -79,7 +80,7 @@ Miminal number of attributes is **one**. You can create an items array of object
     { code: '6', name: 'White' },
     { code: '7', name: 'Grey' },
   ];
-  
+
   // in html template
   <ng-mat-autocomplete [source]="items"> </ng-mat-autocomplete>
 ```
@@ -95,7 +96,7 @@ You can also use `disaplyItemFn` attribute and provide an anonymous function. It
 ```javascript
   // in ts file
   displayItem = (x: any) => '# ' + x.code + ' name: ' + x.name.toUpperCase();
-  
+
   // in html template
   <ng-mat-autocomplete [source]="items" [displayItemFn]="displayItem"> </ng-mat-autocomplete>
 ```
@@ -124,7 +125,7 @@ Get this service into constructor via dependency injection and pass it to autoco
 ```javascript
   // in ts file
   constructor(public dataService: DataService) {}
-  
+
   // in html template
   <ng-mat-autocomplete [source]="dataService" [displayItemFn]="displayItem"> </ng-mat-autocomplete>
 ```
@@ -142,21 +143,21 @@ You can use `transformResult` attribute to format the data returned from the ser
 ```javascript
   // in ts file
   formatData = (data: any) => data.items;
-  
+
   // in html template
-  <ng-mat-autocomplete [source]="dataService" 
+  <ng-mat-autocomplete [source]="dataService"
                        [displayItemFn]="displayItem"
-                       [transformResult]="formatData"> 
+                       [transformResult]="formatData">
   </ng-mat-autocomplete>
 ```
 
-To get a selected option subscribe to `optionSelected` event. 
+To get a selected option subscribe to `optionSelected` event.
 
 ```
-  <ng-mat-autocomplete [source]="dataService" 
+  <ng-mat-autocomplete [source]="dataService"
                        [displayItemFn]="displayItem"
-                       [transformResult]="formatData"> 
-                       (optionSelected)="select($event)"  
+                       [transformResult]="formatData">
+                       (optionSelected)="select($event)"
   </ng-mat-autocomplete>
 ```
 
@@ -175,11 +176,11 @@ To do this simply define local template variable and assign it to `displayTempal
 
 ```javascript
   // in html template
-  <ng-mat-autocomplete [source]="dataService" 
+  <ng-mat-autocomplete [source]="dataService"
                        [displayItemFn]="displayItem"
-                       [displayTemplate]="itemTemplate"> 
+                       [displayTemplate]="itemTemplate">
   </ng-mat-autocomplete>
-  
+
    <ng-template #itemTemplate let-item>
       <mat-icon>flag</mat-icon> {{item.name}} | {{item.code}}
   </ng-template>
@@ -187,11 +188,11 @@ To do this simply define local template variable and assign it to `displayTempal
 
 ### Add new suggestion
 
-You can implement a possibility to create a new option if no suggestion found. To do this set attribute `showAddNew` to true. 
+You can implement a possibility to create a new option if no suggestion found. To do this set attribute `showAddNew` to true.
 
 ![alt text](https://pp.userapi.com/c845421/v845421060/b219c/2N4HhXybWZE.jpg)
 
-You can change the default text to any other string using `addNewText` attribute. 
+You can change the default text to any other string using `addNewText` attribute.
 Clicking on that button will raise an event `(createNew)` with current input text as a param. Subscribe to this event to implement the logic.
 
 ```
@@ -199,7 +200,7 @@ Clicking on that button will raise an event `(createNew)` with current input tex
   <ng-mat-autocomplete [source]="items"
                        [showAddNew] = "true
                        [addNewText] = "'Add new country'"
-                       (createnew)="createNew($event)"> 
+                       (createNew)="createNew($event)">
   </ng-mat-autocomplete>
 ```
 
@@ -215,32 +216,34 @@ Clicking on that button will raise an event `(createNew)` with current input tex
 ### All available attributes example
 
 How to use this component:
-```    
+```
 <ng-mat-autocomplete
     [placeholder]="'Search country'"
     [floatLabel] = "'always'"
-    [source] = "dataService"    
-    [serviceParams]= "params"               
-    [minChars] = "2"                            
-    [doPrefetch]= "false"                       
-    [clearAfterSearch] = "false"                
-    [hasProgressBar] = "false"                 
-    [hasSearchButton] = "false"                 
-    [validationErrors]="errors"                 
-    [transformResult] = "formatCountries"               
-    [isFocused]="true" 
-    (optionSelected)="selectCountry($event)"     
-     
-    [displayItem] = "'item.name'"               
-    [displayItemFn] = "displayCountry"                
-    [displayTemplate] = "countryTemplate"           
-     
-    [showAddNew] = "false"                      
-    [addNewText] = "'Add new'"                 
-    (createNew) = "onCreateNew($event)"   
-                         
-    [formControl]="form.controls['country']"   
-    [(ngModel)]="model.country"                      
+    [source] = "dataService"
+    [serviceParams]= "params"
+    [minChars] = "2"
+    [doPrefetch]= "false"
+    [clearAfterSearch] = "false"
+    [hasProgressBar] = "false"
+    [hasSearchButton] = "false"
+    [validationErrors]="errors"
+    [transformResult] = "formatCountries"
+    [isFocused]="true"
+    (optionSelected)="selectCountry($event)"
+
+    [displayItem] = "'item.name'"
+    [displayItemFn] = "displayCountry"
+    [displayTemplate] = "countryTemplate"
+
+    [showAddNew] = "false"
+    [addNewText] = "'Add new'"
+    (createNew) = "onCreateNew($event)"
+
+    [noSuggestionsText] = "'No suggestions'"
+
+    [formControl]="form.controls['country']"
+    [(ngModel)]="model.country"
     (ngModelChange)="countryChanged(country)"
 >
 </ng-mat-autocomplete>

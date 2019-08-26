@@ -35,8 +35,9 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
    *
    *    [showAddNew] = "false"                       // shows create button when no suggestions
    *    [addNewText] = "'Add new'"                   // text to display near create button
-   *    (createNew) = "onCreateNew($event)"      // rises an event when click on create button
+   *    (createNew) = "onCreateNew($event)"          // rises an event when click on create button
    *
+   *    [noSuggestionsText] = "'No suggestions'"     // text to display when no suggestions found
    *    [transformResult] = "function"               // callback function to format data from server response
    *    [isFocused]="true"                           // sets focus that triggers fetch
    *
@@ -71,6 +72,7 @@ export class AutocompleteComponent implements AfterViewInit, OnInit, ControlValu
   @Input() clearAfterSearch = false;
   @Input() showAddNew = false;
   @Input() addNewText = 'Add new';
+  @Input() noSuggestionsText = 'Sorry, no suggestions were found';
   @Input() isFocused = false;
   @Input() validationErrors: string[] = [];
   @Input() serviceParams?: HttpParams;

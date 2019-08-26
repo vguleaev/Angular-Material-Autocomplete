@@ -13,7 +13,7 @@
   <input matInput
          *ngIf="!formControl"
          [name]="name"
-         [matAutocomplete]="autocomplete"       
+         [matAutocomplete]="autocomplete"
          [placeholder]="placeholder"
          (keyup)="onKey($event)"
          (focus)="onFocus($event)"
@@ -39,7 +39,7 @@
       </span>
     </mat-option>
     <mat-option *ngIf="query && noSuggestions" disabled>
-      <span>Sorry, no suggestions were found</span>
+      <span>{{noSuggestionsText}}</span>
     </mat-option>
     <mat-option *ngIf="query && noSuggestions && showAddNew" [value]="query" (click)="onCreateNew()">
       <mat-icon class="add-icon">add</mat-icon> <span class="create-new"> {{addNewText}} </span>
